@@ -15,14 +15,16 @@ price_max=price
 
 while True:
     price = pyupbit.get_current_price("KRW-BTC")
-    if price < price_min*1.001:
-        upbit.buy_market_order("KRW-BTC", 10000)
-        price_max = price
-        price_min = price
-    if price < price_max*0.999:
-        upbit.sell_market_order("KRW-BTC", btc*0.9995)
-        price_max = price
-        price_min = price
+    if price > price_max:
+        if price > price_min*1.001:
+            upbit.buy_market_order("KRW-BTC", 10000)
+            price_max = price
+            price_min = price
+    if price < price_min :
+        if price < price_max*0.999:
+            upbit.sell_market_order("KRW-BTC", btc*0.9995)
+            price_max = price
+            price_min = price
     if price_max < price:
         price_max = price
     if price_min > price:
